@@ -1,0 +1,3 @@
+start program; 
+show "Hello World";
+destroy program;

@@ -1,0 +1,56 @@
+Program: 
+    'start program' ';' (statements+=Statement)* 'destroy program' ';';
+
+Statement:
+    Assignment |
+    Show |
+    Conditional |
+    Result |
+    IfStatement |
+    Input;
+
+Assignment: 
+    'set' Variable '=' Expression ';';
+
+Variable: 
+    'wl' name=ID;  // used for words/letters
+
+Expression: 
+    SimpleExpr (('+' | '-' | '*' | '/' | '%') SimpleExpr)*;
+SimpleExpr: 
+    Number | Variable | Sentence;
+Number: 
+    INT;
+
+Sentence: 
+    '"' /[^"]*/ '"';  
+
+Show: 
+    'show' Sentence ';';  
+
+Conditional:
+    'whatif' '(' Condition ')' '{' statements+=Statement* '}' 
+    ('else' '{' statements+=Statement* '}')?;
+
+Condition: 
+    Variable Comparison Number;
+Comparison: 
+    '==' | '!=' | '>' | '<' | '<=' | '>=';
+
+Result:
+    'out' Expression ';';
+
+IfStatement:
+    'checkif' '(' Condition ')' '{' statements+=Statement* '}' 
+    ('else' '{' statements+=Statement* '}')?;
+
+Input:
+    'in' Variable ';';
+
+Comment:
+    '~~' /.*$/; 
+
+WHITESPACE: ( /[\s\n]/ | Comment )*;    
+
+ID: /[a-zA-Z_][a-zA-Z0-9_]*/;
+INT: /[0-9]+/;

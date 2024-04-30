@@ -1,0 +1,6 @@
+start program;
+set a = 3;
+set b = 6;
+set result = a + b;
+out "result";
+destroy program;
